@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 import { supabase } from "../supabase";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/Appcontext";
 
 function Transactions() {
   const location = useLocation();
