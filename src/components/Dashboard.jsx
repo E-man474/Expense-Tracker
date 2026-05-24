@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 import { supabase } from "../supabase";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/Appcontext";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppProvider } from "./context/AppContext";
+import { AppProvider } from "./context/AppContext.jsx";
 
 import Login from "./components/login";
 import Signup from "./components/signup";

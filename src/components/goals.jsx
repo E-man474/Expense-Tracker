@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose, MdNotifications } from "react-icons/md";
 import { supabase } from "../supabase";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/Appcontext";
 
 function Goals() {
   const location = useLocation();
