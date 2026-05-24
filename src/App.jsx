@@ -9,7 +9,7 @@ import AddExpense from "./components/add-expense";
 import Reports from "./components/reports";
 import Goals from "./components/goals";
 import Settings from "./components/setting";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
