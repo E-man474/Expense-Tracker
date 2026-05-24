@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AppProvider } from "./context/AppContext.jsx";
+import { AppProvider } from "./context/AppContext";
 
 import Login from "./components/login";
 import Signup from "./components/signup";
@@ -9,7 +9,7 @@ import AddExpense from "./components/add-expense";
 import Reports from "./components/reports";
 import Goals from "./components/goals";
 import Settings from "./components/setting";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
