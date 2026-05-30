@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose } from "react-icons/md";
 import { supabase } from "../supabase";
+import { useApp } from "../context/Appcontext";
 
 function Goals() {
   const location = useLocation();
-
+  const { formatAmount } = useApp();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [goals, setGoals] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -213,11 +214,11 @@ function Goals() {
 
                           <div className="flex items-center justify-between text-sm mt-3">
                             <span className="text-gray-400">Saved</span>
-                            <span className="font-bold text-green-500">Rs. {Number(item.saved_amount).toLocaleString()}</span>
+                            <span className="font-bold text-green-500">Rs. {formatAmount(Number(item.saved_amount))}</span>
                           </div>
                           <div className="flex items-center justify-between text-sm mt-1">
                             <span className="text-gray-400">Target</span>
-                            <span className="font-bold text-gray-700">Rs. {Number(item.target_amount).toLocaleString()}</span>
+                            <span className="font-bold text-gray-700">Rs. {formatAmount(Number(item.target_amount))}</span>
                           </div>
                           <div className="flex items-center justify-between text-sm mt-1">
                             <span className="text-gray-400">Deadline</span>
@@ -289,7 +290,7 @@ function Goals() {
                         </div>
                         <div className="flex items-center justify-between text-sm mt-2">
                           <span className="text-gray-500">Total Saved</span>
-                          <span className="font-bold text-green-600">Rs. {Number(item.saved_amount).toLocaleString()}</span>
+                          <span className="font-bold text-green-600"> {formatAmount(item.saved_amount)}</span>
                         </div>
                         <div className="w-full h-3 bg-green-200 rounded-full overflow-hidden mt-3">
                           <div className="h-full bg-green-500 rounded-full w-full" />
