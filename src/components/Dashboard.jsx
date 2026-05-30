@@ -114,7 +114,7 @@ function Dashboard() {
     { to: "/", label: "📊 Dashboard" },
     { to: "/transactions", label: "📋 Transactions" },
     { to: "/add-expense", label: "➕ Add Expense" },
-    { to: "/categories", label: "🗂️ Categories" },
+   
     { to: "/reports", label: "📈 Reports" },
     { to: "/goals", label: "🎯 Goals" },
     { to: "/settings", label: "⚙️ Settings" },
@@ -198,7 +198,9 @@ function Dashboard() {
                     </div>
                     <button onClick={() => setShowSalaryModal(true)} className="text-xs text-blue-500 hover:underline font-medium">+ Add</button>
                   </div>
-                  <p className="text-2xl font-bold text-blue-500">Rs. {totalIncome.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-blue-500">
+  {formatAmount(totalIncome)}
+</p>
                   <p className="text-xs text-gray-400 mt-1">From salary & income</p>
                 </div>
 
@@ -208,7 +210,9 @@ function Dashboard() {
                     <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-xl">💸</div>
                     <p className="text-sm text-gray-500 font-medium">Total Expenses</p>
                   </div>
-                  <p className="text-2xl font-bold text-red-500">Rs. {totalExpenses.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-red-500">
+  {formatAmount(totalExpenses)}
+</p>
                   <p className="text-xs text-gray-400 mt-1">All spending combined</p>
                 </div>
 
@@ -218,7 +222,9 @@ function Dashboard() {
                     <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-xl">🏦</div>
                     <p className="text-sm text-gray-500 font-medium">This Month Savings</p>
                   </div>
-                  <p className={`text-2xl font-bold ${totalBalance >= 0 ? "text-purple-500" : "text-red-500"}`}>Rs. {Math.max(totalBalance, 0).toLocaleString()}</p>
+                  <p className={`text-2xl font-bold ${totalBalance >= 0 ? "text-purple-500" : "text-red-500"}`}>
+  {formatAmount(Math.max(totalBalance, 0))}
+</p>
                   <p className="text-xs text-gray-400 mt-1">Remaining balance</p>
                 </div>
               </div>
@@ -241,7 +247,7 @@ function Dashboard() {
                           <Pie data={pieData} cx="50%" cy="50%" innerRadius={55} outerRadius={85} paddingAngle={3} dataKey="value">
                             {pieData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                           </Pie>
-                          <Tooltip formatter={(v) => `Rs. ${Number(v).toLocaleString()}`} />
+                          <Tooltip formatter={(v) => formatAmount(Number(v))} />
                         </PieChart>
                       </ResponsiveContainer>
                       <div className="flex flex-col gap-2 min-w-[140px]">
@@ -251,7 +257,9 @@ function Dashboard() {
                               <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: COLORS[i % COLORS.length] }} />
                               <span className="text-gray-600">{item.name}</span>
                             </div>
-                            <span className="font-semibold text-gray-700">Rs. {Number(item.value).toLocaleString()}</span>
+                            <span className="font-semibold text-gray-700">
+  {formatAmount(Number(item.value))}
+</span>
                           </div>
                         ))}
                       </div>
@@ -273,7 +281,7 @@ function Dashboard() {
                     <LineChart data={months}>
                       <XAxis dataKey="month" tick={{ fontSize: 12, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
                       <YAxis tick={{ fontSize: 11, fill: "#9ca3af" }} axisLine={false} tickLine={false} tickFormatter={v => v >= 1000 ? `${v/1000}k` : v} />
-                      <Tooltip formatter={(v) => `Rs. ${Number(v).toLocaleString()}`} />
+                      <Tooltip formatter={(v) => formatAmount(v)} />
                       <Line type="monotone" dataKey="income" stroke="#22c55e" strokeWidth={2.5} dot={{ r: 4, fill: "#22c55e" }} activeDot={{ r: 6 }} />
                       <Line type="monotone" dataKey="expense" stroke="#ef4444" strokeWidth={2.5} dot={{ r: 4, fill: "#ef4444" }} activeDot={{ r: 6 }} />
                     </LineChart>
