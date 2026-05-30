@@ -1,18 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MdMenu, MdClose, MdNotifications } from "react-icons/md";
+import { MdMenu, MdClose } from "react-icons/md";
 import { supabase } from "../supabase";
-import { useApp } from "../context/AppContext";
 
 function Goals() {
   const location = useLocation();
-  const { formatAmount } = useApp();
-
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
   const [goals, setGoals] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [dismissedNotifications, setDismissedNotifications] = useState(new Set());
   const [showAddSavings, setShowAddSavings] = useState(null); // goal id
   const [savingsAmount, setSavingsAmount] = useState("");
   const [loading, setLoading] = useState(true);
@@ -191,54 +186,7 @@ function Goals() {
           <h2 className="text-lg font-bold text-gray-700">Goals</h2>
 
           <div className="flex items-center gap-3">
-            {/* Notification Bell */}
-            <div className="relative">
-              <button
-                onClick={() => setShowNotifications(!showNotifications)}
-                className="relative w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"
-              >
-                <MdNotifications size={22} className="text-gray-600" />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-
-              {/* Notification Dropdown */}
-              {showNotifications && (
-                <div className="absolute right-0 top-12 w-80 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden">
-                  <div className="px-4 py-3 border-b border-gray-100">
-                    <h3 className="font-bold text-gray-800">Notifications</h3>
-                  </div>
-                  {notifications.length === 0 ? (
-                    <div className="px-4 py-6 text-center text-gray-400 text-sm">No notifications</div>
-                  ) : (
-                    <div className="max-h-72 overflow-y-auto">
-                      {notifications.map((n) => (
-                        <div key={n.id} className="px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition">
-                          <div className="flex items-start justify-between gap-2">
-                            <p className="text-sm text-gray-700 flex-1">{n.msg}</p>
-                            <button
-                              onClick={() => setDismissedNotifications(prev => new Set([...prev, n.id]))}
-                              className="text-gray-300 hover:text-gray-500 text-lg leading-none flex-shrink-0 mt-0.5"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                          <div className="w-full h-1.5 bg-gray-100 rounded-full mt-2">
-                            <div className={`h-full rounded-full ${progressColor(n.progress)}`} style={{ width: `${Math.min(n.progress, 100)}%` }} />
-                          </div>
-                          <p className="text-xs text-gray-400 mt-1">{n.progress}% complete</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <button onClick={() => setShowModal(true)}
+<button onClick={() => setShowModal(true)}
               className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition">
               + Add Goal
             </button>
@@ -294,11 +242,11 @@ function Goals() {
                           {/* Amounts */}
                           <div className="flex items-center justify-between text-sm mt-3">
                             <span className="text-gray-400">Saved</span>
-                            <span className="font-bold text-green-500">{formatAmount(item.saved_amount)}</span>
+                            <span className="font-bold text-green-500">Rs. {Number(item.saved_amount).toLocaleString()}</span>
                           </div>
                           <div className="flex items-center justify-between text-sm mt-1">
                             <span className="text-gray-400">Target</span>
-                            <span className="font-bold text-gray-700">{formatAmount(item.target_amount)}</span>
+                            <span className="font-bold text-gray-700">Rs. {Number(item.target_amount).toLocaleString()}</span>
                           </div>
                           <div className="flex items-center justify-between text-sm mt-1">
                             <span className="text-gray-400">Deadline</span>
@@ -376,7 +324,7 @@ function Goals() {
                         </div>
                         <div className="flex items-center justify-between text-sm mt-2">
                           <span className="text-gray-500">Total Saved</span>
-                          <span className="font-bold text-green-600">{formatAmount(item.saved_amount)}</span>
+                          <span className="font-bold text-green-600">Rs. {Number(item.saved_amount).toLocaleString()}</span>
                         </div>
                         <div className="w-full h-3 bg-green-200 rounded-full overflow-hidden mt-3">
                           <div className="h-full bg-green-500 rounded-full w-full" />
@@ -441,10 +389,7 @@ function Goals() {
         </div>
       )}
 
-      {/* Click outside notification close */}
-      {showNotifications && (
-        <div className="fixed inset-0 z-40" onClick={() => setShowNotifications(false)} />
-      )}
+
     </div>
   );
 }
