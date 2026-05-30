@@ -126,7 +126,7 @@ function Transactions() {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
 
       {sidebarOpen && (
         <div
@@ -136,12 +136,12 @@ function Transactions() {
       )}
 
       <aside className={`
-        fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-50
+        fixed top-0 left-0 h-full w-56 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 flex flex-col z-50
         transition-transform duration-300
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static lg:z-auto
       `}>
-        <div className="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
+        <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
           <h1 className="text-xl font-bold">
             📊 Expense <span className="text-green-500">Tracker</span>
           </h1>
@@ -158,8 +158,8 @@ function Transactions() {
                 onClick={() => setSidebarOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${
                   location.pathname === to
-                    ? "text-green-500 bg-green-50"
-                    : "text-gray-500 hover:text-green-500 hover:bg-gray-50"
+                    ? "text-green-500 bg-green-50 dark:bg-green-900/20"
+                    : "text-gray-500 dark:text-gray-400 hover:text-green-500 hover:bg-gray-50 dark:hover:bg-gray-700"
                 }`}
               >
                 {label}
@@ -171,7 +171,7 @@ function Transactions() {
 
       <div className="flex-1 flex flex-col overflow-hidden">
 
-        <nav className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 bg-white sticky top-0 z-30">
+        <nav className="flex items-center justify-between px-4 md:px-6 py-4 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 sticky top-0 z-30">
           <button onClick={() => setSidebarOpen(true)} className="text-gray-500 lg:hidden">
             <MdMenu size={24} />
           </button>

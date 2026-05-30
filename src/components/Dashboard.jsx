@@ -123,20 +123,20 @@ function Dashboard() {
   const monthName = now.toLocaleString("default", { month: "long" });
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
       {sidebarOpen && <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
       {/* Sidebar */}
-      <aside className={`fixed top-0 left-0 h-full w-56 bg-white border-r border-gray-100 flex flex-col z-50 transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}>
-        <div className="px-4 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h1 className="text-xl font-bold">📊 Expense <span className="text-green-500">Tracker</span></h1>
+      <aside className={`fixed top-0 left-0 h-full w-56 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 flex flex-col z-50 transition-transform duration-300 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 lg:static lg:z-auto`}>
+        <div className="px-4 py-4 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between">
+          <h1 className="text-xl font-bold dark:text-white">📊 Expense <span className="text-green-500">Tracker</span></h1>
           <button className="lg:hidden text-gray-400" onClick={() => setSidebarOpen(false)}><MdClose size={22} /></button>
         </div>
         <ul className="flex flex-col gap-1 mt-4 px-3 text-base">
           {navLinks.map(({ to, label }) => (
             <li key={to}>
               <Link to={to} onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${location.pathname === to ? "text-green-500 bg-green-50" : "text-gray-500 hover:text-green-500 hover:bg-gray-50"}`}>
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-colors ${location.pathname === to ? "text-green-500 bg-green-50 dark:bg-green-900/20" : "text-gray-500 dark:text-gray-400 hover:text-green-500 hover:bg-gray-50 dark:hover:bg-gray-700"}`}>
                 {label}
               </Link>
             </li>
@@ -147,9 +147,9 @@ function Dashboard() {
       {/* Main */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Topbar */}
-        <nav className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-gray-100 bg-white sticky top-0 z-30">
+        <nav className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 sticky top-0 z-30">
           <button onClick={() => setSidebarOpen(true)} className="text-gray-500 lg:hidden"><MdMenu size={24} /></button>
-          <div className="hidden lg:flex items-center gap-2 text-sm text-gray-500 border border-gray-200 px-3 py-2 rounded-lg">
+          <div className="hidden lg:flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-600 px-3 py-2 rounded-lg">
             📅 {monthName} 1 – {monthName} 31, {now.getFullYear()}
           </div>
           <div className="flex items-center gap-2">

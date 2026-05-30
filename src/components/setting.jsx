@@ -165,7 +165,7 @@ const handleSaveProfile = async () => {
                       <option value="EUR">🇪🇺 EUR — €</option>
                     </select>
                   </div>
-                  <div>
+                  {/* <div>
                     <label className="text-sm text-gray-600 dark:text-gray-300 block mb-2">Theme</label>
                     <div className="grid grid-cols-2 gap-3">
                       <button
@@ -178,7 +178,7 @@ const handleSaveProfile = async () => {
                         className={`py-3 rounded-xl font-semibold border-2 transition flex items-center justify-center gap-2 ${userData.theme === "Dark" ? "border-green-500 bg-green-50 dark:bg-green-900/20 text-green-600" : "border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"}`}>
                         🌙 Dark
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   <button onClick={handleSaveProfile}
                     className="bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold transition">
