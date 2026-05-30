@@ -16,7 +16,7 @@ function Settings() {
     name: "",
     email: "",
     currency: "PKR",
-    theme: "Light",
+    // theme: "Light",
   });
 
   // profile context se load karo
@@ -26,19 +26,19 @@ function Settings() {
         name: profile.name,
         email: profile.email,
         currency: profile.currency,
-        theme: profile.theme,
+        // theme: profile.theme,
       });
     }
   }, [profile]);
 
   // Theme real time apply karo
-  useEffect(() => {
-    if (userData.theme === "Dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [userData.theme]);
+  // useEffect(() => {
+  //   if (userData.theme === "Dark") {
+  //     document.documentElement.classList.add("dark");
+  //   } else {
+  //     document.documentElement.classList.remove("dark");
+  //   }
+  // }, [userData.theme]);
 
 const handleSaveProfile = async () => {
   setLoading(true);
@@ -58,7 +58,7 @@ const handleSaveProfile = async () => {
       full_name: userData.name,
       email: user.email,
       currency: userData.currency,
-      theme: userData.theme,
+      // theme: userData.theme,
     })
     .eq("user_id", user.id);
 
@@ -71,7 +71,7 @@ const handleSaveProfile = async () => {
       name: userData.name,
       email: user.email,
       currency: userData.currency,
-      theme: userData.theme,
+      // theme: userData.theme,
     });
 
     alert("Profile Updated Successfully");
@@ -81,7 +81,7 @@ const handleSaveProfile = async () => {
 };
   const handleLogout = async () => {
     // Logout par dark mode hata do
-    document.documentElement.classList.remove("dark");
+    // document.documentElement.classList.remove("dark");
     await supabase.auth.signOut();
     navigate("/login");
   };
