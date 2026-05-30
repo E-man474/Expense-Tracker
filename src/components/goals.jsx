@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MdMenu, MdClose, MdNotifications } from "react-icons/md";
 import { supabase } from "../supabase";
-import { useApp } from "../context/Appcontext";
+import { useApp } from "../context/AppContext";
 
 function Goals() {
   const location = useLocation();
@@ -12,7 +12,6 @@ function Goals() {
   const [goals, setGoals] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [seenNotifications, setSeenNotifications] = useState(new Set());
   const [dismissedNotifications, setDismissedNotifications] = useState(new Set());
   const [showAddSavings, setShowAddSavings] = useState(null); // goal id
   const [savingsAmount, setSavingsAmount] = useState("");
@@ -95,7 +94,7 @@ function Goals() {
   // Savings add karo — dashboard ki "This Month Savings" se connected
   const handleAddSavings = async (goalId) => {
     if (!savingsAmount || Number(savingsAmount) <= 0) {
-      alert("Please enter a valid amount");
+      alert("Amount enter karo");
       return;
     }
 
@@ -116,7 +115,7 @@ function Goals() {
     setShowAddSavings(null);
     fetchGoals();
 
-    if (isCompleted) alert(`🎉 Congratulations! "${goal.title}" You have achieved your goal!`); 
+    if (isCompleted) alert(`🎉 Mubarak! "${goal.title}" goal complete ho gaya!`);
   };
 
   // Pause / Resume
@@ -195,17 +194,13 @@ function Goals() {
             {/* Notification Bell */}
             <div className="relative">
               <button
-                onClick={() => {
-                  const newSeen = new Set(notifications.map(n => n.id));
-                  setSeenNotifications(newSeen);
-                  setShowNotifications(!showNotifications);
-                }}
+                onClick={() => setShowNotifications(!showNotifications)}
                 className="relative w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition"
               >
                 <MdNotifications size={22} className="text-gray-600" />
-                {notifications.filter(n => !seenNotifications.has(n.id)).length > 0 && (
+                {notifications.length > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
-                    {notifications.filter(n => !seenNotifications.has(n.id)).length}
+                    {notifications.length}
                   </span>
                 )}
               </button>
@@ -262,7 +257,7 @@ function Goals() {
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center justify-center h-60 text-center">
               <div className="text-5xl mb-4">🎯</div>
               <h2 className="text-lg font-bold text-gray-700">No Goals Yet</h2>
-              <p className="text-sm text-gray-400 mt-2 mb-4">Please Enter your first savings goal.</p>
+              <p className="text-sm text-gray-400 mt-2 mb-4">Apna pehla savings goal set karo.</p>
               <button onClick={() => setShowModal(true)} className="bg-green-500 text-white px-5 py-2.5 rounded-xl text-sm font-semibold">+ Add Goal</button>
             </div>
           ) : (
@@ -411,7 +406,7 @@ function Goals() {
                 onChange={(e) => setNewGoal({ ...newGoal, title: e.target.value })}
                 className="border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-100" />
 
-              <input type="number" placeholder="Already Saved Amount (It could be 0)"
+              <input type="number" placeholder="Already Saved Amount (0 bhi ho sakta)"
                 value={newGoal.saved_amount}
                 onChange={(e) => setNewGoal({ ...newGoal, saved_amount: e.target.value })}
                 className="border border-gray-200 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-100" />
