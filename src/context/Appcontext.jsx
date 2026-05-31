@@ -4,37 +4,24 @@ import { supabase } from "../supabase";
 const AppContext = createContext();
 
 export function AppProvider({ children }) {
-  const [profile, setProfile] = useState(null); // null = still loading
-  const [profileLoaded, setProfileLoaded] = useState(false);
+  const [profile, setProfile] = useState({
+    name: "",
+    email: "",
+    currency: "PKR",
+    theme: "Light",
+  });
 
   useEffect(() => {
-    // Current session check
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        loadProfile(session.user);
-      } else {
-        setProfileLoaded(true);
-      }
+      if (session?.user) loadProfile(session.user);
     });
-
-    // Login/logout par reload
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        loadProfile(session.user);
-      } else {
-        setProfile(null);
-        setProfileLoaded(true);
-      }
-    });
-
-    return () => listener.subscription.unsubscribe();
-  }, []);
+  }, []); // sirf ek baar — onAuthStateChange nahi
 
   const loadProfile = async (user) => {
     if (!user) {
-      const { data: { user: currentUser } } = await supabase.auth.getUser();
-      if (!currentUser) return;
-      user = currentUser;
+      const { data: { user: u } } = await supabase.auth.getUser();
+      if (!u) return;
+      user = u;
     }
 
     const { data } = await supabase
@@ -66,24 +53,16 @@ export function AppProvider({ children }) {
         theme: newProfile.theme,
       });
     }
-    setProfileLoaded(true);
   };
 
   const formatAmount = (amount) => {
-    const currency = profile?.currency || "PKR";
     const symbols = { PKR: "Rs.", USD: "$", EUR: "€" };
-    const symbol = symbols[currency] || "Rs.";
+    const symbol = symbols[profile.currency] || "Rs.";
     return `${symbol} ${Number(amount).toLocaleString()}`;
   };
 
   return (
-    <AppContext.Provider value={{
-      profile: profile || { name: "", email: "", currency: "PKR", theme: "Light" },
-      setProfile,
-      loadProfile,
-      formatAmount,
-      profileLoaded,
-    }}>
+    <AppContext.Provider value={{ profile, setProfile, loadProfile, formatAmount }}>
       {children}
     </AppContext.Provider>
   );

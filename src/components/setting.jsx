@@ -38,25 +38,25 @@ function Settings() {
       return;
     }
 
-   const { error } = await supabase
-  .from("profiles")
-  .upsert({
-    user_id: user.id,
-    full_name: userData.name,
-    email: user.email,
-    currency: userData.currency,
-  })
+    const { error } = await supabase
+      .from("profiles")
+      .update({
+        full_name: userData.name,
+        email: user.email,
+        currency: userData.currency,
+      })
       .eq("user_id", user.id);
 
     if (error) {
       alert(error.message);
     } else {
-      await loadProfile();
-      setProfile({
+      // seedha setProfile karo — loadProfile mat karo warna override ho jayega
+      setProfile(prev => ({
+        ...prev,
         name: userData.name,
         email: user.email,
         currency: userData.currency,
-      });
+      }));
       alert("Profile Updated Successfully");
     }
 
