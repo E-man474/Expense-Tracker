@@ -38,13 +38,14 @@ function Settings() {
       return;
     }
 
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        full_name: userData.name,
-        email: user.email,
-        currency: userData.currency,
-      })
+   const { error } = await supabase
+  .from("profiles")
+  .upsert({
+    user_id: user.id,
+    full_name: userData.name,
+    email: user.email,
+    currency: userData.currency,
+  })
       .eq("user_id", user.id);
 
     if (error) {
