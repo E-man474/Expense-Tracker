@@ -52,6 +52,9 @@ function Dashboard() {
     setLoading(false);
   };
 
+  // now yahan define karo — sab jagah use hoga
+  const now = new Date();
+
   // --- Stats Calculation ---
   // Total Balance — sab months ka (all time)
   const totalIncome = allTransactions.filter(t => t.type === "Income").reduce((s, t) => s + Number(t.amount), 0);
@@ -89,7 +92,6 @@ function Dashboard() {
 
   // --- Monthly Trend (last 6 months) ---
   const months = [];
-  const now = new Date();
   for (let i = 5; i >= 0; i--) {
     const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
     months.push({ month: d.toLocaleString("default", { month: "short" }), year: d.getFullYear(), num: d.getMonth() + 1, income: 0, expense: 0 });
