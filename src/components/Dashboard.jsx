@@ -52,15 +52,36 @@ function Dashboard() {
     setLoading(false);
   };
 
-  // --- Stats Calculation --- sirf transactions table
+  // --- Stats Calculation ---
+  // Total Balance — sab months ka (all time)
   const totalIncome = allTransactions.filter(t => t.type === "Income").reduce((s, t) => s + Number(t.amount), 0);
   const totalExpenses = allTransactions.filter(t => t.type === "Expense").reduce((s, t) => s + Number(t.amount), 0);
   const totalBalance = totalIncome - totalExpenses;
+
+  // This Month Savings — sirf current month ki income - current month ke expenses
+  const currentMonth = now.getMonth() + 1;
+  const currentYear = now.getFullYear();
+
+  const thisMonthTransactions = allTransactions.filter(t => {
+    const d = new Date(t.transaction_date);
+    return d.getMonth() + 1 === currentMonth && d.getFullYear() === currentYear;
+  });
+
+  const thisMonthIncome = thisMonthTransactions
+    .filter(t => t.type === "Income")
+    .reduce((s, t) => s + Number(t.amount), 0);
+
+  const thisMonthExpenses = thisMonthTransactions
+    .filter(t => t.type === "Expense")
+    .reduce((s, t) => s + Number(t.amount), 0);
+
+  const thisMonthSavings = thisMonthIncome - thisMonthExpenses;
+
   const recentTransactions = allTransactions.slice(0, 5);
 
-  // --- Pie Chart Data (by category from transactions) ---
+  // --- Pie Chart Data — sirf current month ke expenses ---
   const categoryTotals = {};
-  allTransactions.filter(t => t.type === "Expense").forEach(t => {
+  thisMonthTransactions.filter(t => t.type === "Expense").forEach(t => {
     const cat = t.category || "Other";
     categoryTotals[cat] = (categoryTotals[cat] || 0) + Number(t.amount);
   });
@@ -222,10 +243,12 @@ function Dashboard() {
                     <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-xl">🏦</div>
                     <p className="text-sm text-gray-500 font-medium">This Month Savings</p>
                   </div>
-                  <p className={`text-2xl font-bold ${totalBalance >= 0 ? "text-purple-500" : "text-red-500"}`}>
-  {formatAmount(Math.max(totalBalance, 0))}
-</p>
-                  <p className="text-xs text-gray-400 mt-1">Remaining balance</p>
+                  <p className={`text-2xl font-bold ${thisMonthSavings >= 0 ? "text-purple-500" : "text-red-500"}`}>
+                    {formatAmount(thisMonthSavings)}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-1">
+                    {thisMonthIncome === 0 ? "No income added this month" : `Income - Expenses this month`}
+                  </p>
                 </div>
               </div>
 
